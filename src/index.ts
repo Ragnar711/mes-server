@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { config } from "dotenv";
 import { errorHandler } from "./Middlewares/error-handler";
 import { NotFoundError } from "./Utils/errors";
+import router from "./Routes/routes";
 
 config();
 
@@ -17,9 +18,7 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
-});
+app.use("/admin", router);
 
 app.all("*", (req, res, next) => {
     next(new NotFoundError());

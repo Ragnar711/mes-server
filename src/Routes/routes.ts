@@ -1,9 +1,9 @@
 import asyncHandler from "express-async-handler";
 import { Router } from "express";
-import DummyController from "../Controllers/test";
+import LoginController from "../Controllers/login";
 
 const router = Router();
 
-router.get("/", asyncHandler(DummyController.getDummyData));
+router.get("/login", asyncHandler(LoginController.login));
 
 export default router;
