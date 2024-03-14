@@ -7,13 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id             Int      @id @default(autoincrement())
-  nom            String  @db.VarChar(255)
-  prenom         String  @db.VarChar(255)
-  matricule      Int
-  password       String @db.VarChar(255)
-  categorie      String @db.VarChar(255)
-  sous_categorie String @db.VarChar(255)
+  nom            String   @db.VarChar(255)
+  prenom         String   @db.VarChar(255)
+  matricule      Int      @unique
+  password       String   @db.VarChar(255)
+  categorie      String   @db.VarChar(255)
+  sous_categorie String   @db.VarChar(255)
   machine        String?
 }

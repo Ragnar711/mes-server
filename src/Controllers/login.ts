@@ -11,9 +11,9 @@ class LoginController {
         req: Request,
         res: Response,
     ): Promise<void> => {
-        const [matricule, password] = req.body;
+        const { matricule, password } = req.body;
 
-        const isUser = await prisma.user.findUnique(matricule);
+        const isUser = await prisma.users.findUnique(matricule);
 
         if (!isUser) {
             throw new NotFoundError("Utilisateur n'existe pas");
@@ -29,7 +29,7 @@ class LoginController {
 
         const user = isUser.nom + " " + isUser.prenom;
 
-        res.status(200).json({ success: true, connected: true, user });
+        res.status(200).json({ user });
     };
 }
 
