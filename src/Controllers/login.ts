@@ -6,31 +6,30 @@ import {
     NotFoundError,
 } from "../Utils/errors";
 
-class LoginController {
-    public static login = async (
-        req: Request,
-        res: Response,
-    ): Promise<void> => {
-        const { matricule, password } = req.body;
+const login = async (req: Request, res: Response): Promise<void> => {
+    const { matricule, password } = req.body;
 
-        const isUser = await prisma.users.findUnique(matricule);
+    const isUser = await prisma.users.findUnique({
+        where: {
+            matricule: matricule,
+        },
+    });
 
-        if (!isUser) {
-            throw new NotFoundError("Utilisateur n'existe pas");
-        }
+    if (!isUser) {
+        throw new NotFoundError("Utilisateur n'existe pas");
+    }
 
-        if (isUser.password !== password) {
-            throw new BadRequestError("Mot de passe incorrect");
-        }
+    if (isUser.password !== password) {
+        throw new BadRequestError("Mot de passe incorrect");
+    }
 
-        if (isUser.categorie !== "admin") {
-            throw new NotAuthorizedError();
-        }
+    if (isUser.categorie !== "admin") {
+        throw new NotAuthorizedError();
+    }
 
-        const user = isUser.nom + " " + isUser.prenom;
+    const user = `${isUser.prenom} ${isUser.nom}`;
 
-        res.status(200).json({ user });
-    };
-}
+    res.status(200).json({ user });
+};
 
-export default LoginController;
+export default login;
