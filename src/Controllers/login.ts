@@ -11,7 +11,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
 
     const isUser = await prisma.users.findUnique({
         where: {
-            matricule: matricule,
+            matricule,
         },
     });
 
