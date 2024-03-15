@@ -9,7 +9,11 @@ import {
 const login = async (req: Request, res: Response): Promise<void> => {
     const { matricule, password } = req.body;
 
-    const isUser = await prisma.users.findUnique(matricule);
+    const isUser = await prisma.users.findUnique({
+        where: {
+            matricule: matricule,
+        },
+    });
 
     if (!isUser) {
         throw new NotFoundError("Utilisateur n'existe pas");
